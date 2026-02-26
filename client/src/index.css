@@ -1,0 +1,79 @@
+@import "tailwindcss";
+* {
+  transition:
+    background-color 300ms ease,
+    color 300ms ease,
+    border-color 300ms ease,
+    fill 300ms ease,
+    stroke 300ms ease;
+}
+
+:root {
+  --bg-main: #ffffff;
+  --bg-muted: #f8fafc;
+  --bg-elevated: #f1f5f9;
+
+  --text-main: #0f172a;
+  --text-muted: #475569;
+
+  --border-subtle: #e2e8f0;
+
+  --accent: #2563eb;
+}
+
+.dark {
+  --bg-main: #0b1220;
+  --bg-muted: #111827;
+  --bg-elevated: #1f2933;
+
+  --text-main: #e5e7eb;
+  --text-muted: #9ca3af;
+
+  --border-subtle: #273344;
+
+  --accent: #60a5fa;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+
+.bg-main {
+  background-color: var(--bg-main);
+}
+
+.bg-muted {
+  background-color: var(--bg-muted);
+}
+
+.bg-elevated {
+  background-color: var(--bg-elevated);
+}
+
+.text-main {
+  color: var(--text-main);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.border-subtle {
+  border-color: var(--border-subtle);
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.bg-accent {
+  background-color: var(--accent);
+}
