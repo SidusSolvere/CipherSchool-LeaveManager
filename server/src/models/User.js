@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      enum: ["SUPER_ADMIN", "ADMIN", "MANAGER", "EMPLOYEE"],
+      enum: ["ADMIN", "MANAGER", "EMPLOYEE"],
       required: true,
     },
 
@@ -49,10 +49,9 @@ const userSchema = new mongoose.Schema(
 
 userSchema.index({ companyId: 1, employeeId: 1 }, { unique: true });
 
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+userSchema.pre("save", async function () {
+  if (!this.isModified("password")) return;
   this.password = await bcrypt.hash(this.password, 10);
-  next();
 });
 
 userSchema.methods.comparePassword = function (enteredPassword) {

@@ -14,6 +14,7 @@ export default function CompanyRegister() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [adminCredentials, setAdminCredentials] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,30 +31,33 @@ export default function CompanyRegister() {
       setForm({ ...form, [name]: value });
     }
   };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError("");
+  setSuccess("");
+  setAdminCredentials(null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
+  try {
+    setLoading(true);
 
-    try {
-      setLoading(true);
-      await registerCompany(form);
-      setSuccess("Company registered successfully");
-      setForm({
-        name: "",
-        emailDomain: "",
-        governmentId: { idType: "GSTIN", idValue: "" },
-      });
-    } catch (err) {
-      setError(err.response?.data?.message || "Registration failed");
-    } finally {
-      setLoading(false);
-    }
-  };
+    const res = await registerCompany(form);
 
+    setSuccess(res.data.message);
+    setAdminCredentials(res.data.adminCredentials);
+
+    setForm({
+      name: "",
+      emailDomain: "",
+      governmentId: { idType: "GSTIN", idValue: "" },
+    });
+  } catch (err) {
+    setError(err.response?.data?.message || "Registration failed");
+  } finally {
+    setLoading(false);
+  }
+};
   return (
-    <div >
+    <div>
       <h2>Company Registration</h2>
 
       <form onSubmit={handleSubmit}>
@@ -100,8 +104,32 @@ export default function CompanyRegister() {
         </button>
       </form>
 
-      {error && <p>{error}</p>}
-      {success && <p>{success}</p>}
+      {error && <p >{error}</p>}
+      {success && <p >{success}</p>}
+
+     {adminCredentials && adminCredentials.email && (
+  <div
+    style={{
+      marginTop: "20px",
+      padding: "12px",
+      border: "1px solid #ccc",
+    }}
+  >
+    <h3>Admin Account Created</h3>
+
+    <p>
+      <strong>Email:</strong> {adminCredentials.email}
+    </p>
+
+    <p>
+      <strong>Password:</strong> {adminCredentials.password}
+    </p>
+
+    <p style={{ color: "red" }}>
+      ⚠ Save this password now. It will not be shown again.
+    </p>
+  </div>
+)}
     </div>
   );
 }
