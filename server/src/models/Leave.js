@@ -14,6 +14,12 @@ const leaveSchema = new mongoose.Schema(
       required: true,
     },
 
+    type: {
+      type: String,
+      enum: ["CASUAL", "SICK", "PAID"],
+      required: true,
+    },
+
     startDate: {
       type: Date,
       required: true,
@@ -24,23 +30,15 @@ const leaveSchema = new mongoose.Schema(
       required: true,
     },
 
-    reason: {
-      type: String,
-      trim: true,
-    },
+    reason: String,
 
     status: {
       type: String,
       enum: ["PENDING", "APPROVED", "REJECTED"],
       default: "PENDING",
     },
-
-    approvedBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 module.exports = mongoose.model("Leave", leaveSchema);

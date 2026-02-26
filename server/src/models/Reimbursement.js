@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const reimbursementSchema = new mongoose.Schema(
   {
-    employeeId: {
+    employee: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
@@ -21,34 +21,15 @@ const reimbursementSchema = new mongoose.Schema(
 
     category: {
       type: String,
-      enum: ["TRAVEL", "FOOD", "STAY", "OTHER"],
+      enum: ["TRAVEL", "FOOD", "OFFICE", "OTHER"],
       required: true,
     },
 
-    description: {
-      type: String,
-      trim: true,
-    },
+    description: String,
 
-    billFile: {
-      bucket: {
-        type: String,
-        default: "reimbursement",
-        required: true,
-      },
-      path: {
-        type: String,
-        required: true,
-      },
-      mimeType: {
-        type: String,
-        required: true,
-      },
-      originalName: {
-        type: String,
-        required: true,
-      },
-      size: Number,
+    receiptPath: {
+      type: String,
+      required: true,
     },
 
     status: {
@@ -56,13 +37,8 @@ const reimbursementSchema = new mongoose.Schema(
       enum: ["PENDING", "APPROVED", "REJECTED"],
       default: "PENDING",
     },
-
-    approvedBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 module.exports = mongoose.model("Reimbursement", reimbursementSchema);

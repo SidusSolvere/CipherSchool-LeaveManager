@@ -31,31 +31,31 @@ export default function CompanyRegister() {
       setForm({ ...form, [name]: value });
     }
   };
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError("");
-  setSuccess("");
-  setAdminCredentials(null);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+    setAdminCredentials(null);
 
-  try {
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    const res = await registerCompany(form);
+      const res = await registerCompany(form);
 
-    setSuccess(res.data.message);
-    setAdminCredentials(res.data.adminCredentials);
+      setSuccess(res.data.message);
+      setAdminCredentials(res.data.adminCredentials);
 
-    setForm({
-      name: "",
-      emailDomain: "",
-      governmentId: { idType: "GSTIN", idValue: "" },
-    });
-  } catch (err) {
-    setError(err.response?.data?.message || "Registration failed");
-  } finally {
-    setLoading(false);
-  }
-};
+      setForm({
+        name: "",
+        emailDomain: "",
+        governmentId: { idType: "GSTIN", idValue: "" },
+      });
+    } catch (err) {
+      setError(err.response?.data?.message || "Registration failed");
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div>
       <h2>Company Registration</h2>
@@ -104,32 +104,32 @@ const handleSubmit = async (e) => {
         </button>
       </form>
 
-      {error && <p >{error}</p>}
-      {success && <p >{success}</p>}
+      {error && <p>{error}</p>}
+      {success && <p>{success}</p>}
 
-     {adminCredentials && adminCredentials.email && (
-  <div
-    style={{
-      marginTop: "20px",
-      padding: "12px",
-      border: "1px solid #ccc",
-    }}
-  >
-    <h3>Admin Account Created</h3>
+      {adminCredentials && adminCredentials.email && (
+        <div
+          style={{
+            marginTop: "20px",
+            padding: "12px",
+            border: "1px solid #ccc",
+          }}
+        >
+          <h3>Admin Account Created</h3>
 
-    <p>
-      <strong>Email:</strong> {adminCredentials.email}
-    </p>
+          <p>
+            <strong>Email:</strong> {adminCredentials.email}
+          </p>
 
-    <p>
-      <strong>Password:</strong> {adminCredentials.password}
-    </p>
+          <p>
+            <strong>Password:</strong> {adminCredentials.password}
+          </p>
 
-    <p style={{ color: "red" }}>
-      ⚠ Save this password now. It will not be shown again.
-    </p>
-  </div>
-)}
+          <p style={{ color: "red" }}>
+            ⚠ Save this password now. It will not be shown again.
+          </p>
+        </div>
+      )}
     </div>
   );
 }

@@ -31,7 +31,6 @@ export default function Login() {
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
 
-      // 🔐 Role-based redirect (from backend role)
       switch (user.role) {
         case "ADMIN":
           navigate("/admin/dashboard");
@@ -56,7 +55,7 @@ export default function Login() {
   };
 
   return (
-    <div >
+    <div>
       <h2>Login</h2>
 
       <form onSubmit={handleSubmit}>
@@ -83,7 +82,7 @@ export default function Login() {
         </button>
       </form>
 
-      {error && <p >{error}</p>}
+      {error && <p>{error}</p>}
     </div>
   );
 }
